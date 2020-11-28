@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using LibraryModel.Data;
-
+using Bilici_Miodrag_Miroslav_Lab2.Hubs;
 namespace Bilici_Miodrag_Miroslav_Lab2
 {
     public class Startup
@@ -28,6 +28,7 @@ namespace Bilici_Miodrag_Miroslav_Lab2
             services.AddControllersWithViews();
             services.AddDbContext<LibraryContext>(options =>
  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +56,7 @@ namespace Bilici_Miodrag_Miroslav_Lab2
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }
